@@ -15,6 +15,7 @@ const SideBar = () => {
     
 
     const { currentRole } = useSelector(state => state.user);
+    const location = useLocation(); // Called useLocation hook
 
     return (
         <>

@@ -1,26 +1,29 @@
-import React, { useState } from 'react';
-import { Container, Grid, Pagination } from '@mui/material';
-import styled from 'styled-components';
-import { useDispatch, useSelector } from 'react-redux';
-import { addToCart } from '../redux/userSlice';
-import { BasicButton } from '../utils/buttonStyles';
-import { useNavigate } from 'react-router-dom';
-import Popup from './Popup';
-import { addStuff } from '../redux/userHandle';
+import React, { useState } from "react";
+import { Container, Grid, Pagination } from "@mui/material";
+import styled from "styled-components";
+import { useDispatch, useSelector } from "react-redux";
+import { addToCart } from "../redux/userSlice";
+import { BasicButton } from "../utils/buttonStyles";
+import { useNavigate } from "react-router-dom";
+import Popup from "./Popup";
+import { addStuff } from "../redux/userHandle";
 
-const Products = ({}) => {
+//add productData Param
+const Products = ({ productData }) => {
   const dispatch = useDispatch();
 
   const itemsPerPage = 9;
-
-  const { currentRole, responseSearch } = useSelector();
+  // Add missed Hook call
+  const navigate = useNavigate();
+  
+  const { currentRole, responseSearch } = useSelector((state) => state.user);
   const [currentPage, setCurrentPage] = useState(1);
   const [showPopup, setShowPopup] = useState(false);
   const [message, setMessage] = useState("");
 
   const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem + itemsPerPage;
-  const currentItems = (indexOfFirstItem, indexOfLastItem);
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage; // Change sign from + to -
+  const currentItems = productData.slice(indexOfFirstItem, indexOfLastItem); //Fix current items to to slice
 
   const handleAddToCart = (event, product) => {
     event.stopPropagation();
@@ -35,19 +38,25 @@ const Products = ({}) => {
 
   const messageHandler = (event) => {
     event.stopPropagation();
-    setMessage("You have to login or register first")
-    setShowPopup(true)
+    setMessage("You have to login or register first");
+    setShowPopup(true);
   };
 
-  if (!responseSearch) {
+  //change from response search -> productData
+  if (!productData) {
     return <div>Product not found</div>;
   }
 
   return (
     <>
       <ProductGrid container spacing={3}>
+
         {currentItems.map((data, index) => (
-          <Grid item xs={12} sm={6} md={4}
+          <Grid
+            item
+            xs={12}
+            sm={6}
+            md={4}
             key={index}
             onClick={() => navigate("/product/view/" + data._id)}
             sx={{ cursor: "pointer" }}
@@ -59,7 +68,7 @@ const Products = ({}) => {
               <PriceCost>₹{data.price.cost}</PriceCost>
               <PriceDiscount>{data.price.discountPercent}% off</PriceDiscount>
               <AddToCart>
-                {currentRole === "Customer" &&
+                {currentRole === "Customer" && (
                   <>
                     <BasicButton
                       onClick={(event) => handleAddToCart(event, data)}
@@ -67,35 +76,43 @@ const Products = ({}) => {
                       Add To Cart
                     </BasicButton>
                   </>
-                }
-                {currentRole === "Shopcart" &&
+                )}
+                {currentRole === "Shopcart" && (
                   <>
-                    <BasicButton
-                      onClick={(event) => handleUpload(event, data)}
-                    >
+                    <BasicButton onClick={(event) => handleUpload(event, data)}>
                       Upload
                     </BasicButton>
                   </>
-                }
-
+                )}
               </AddToCart>
             </ProductContainer>
           </Grid>
         ))}
       </ProductGrid>
 
-      <Container sx={{ mt: 10, mb: 10, display: "flex", justifyContent: 'center', alignItems: "center" }}>
+      <Container
+        sx={{
+          mt: 10,
+          mb: 10,
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
         <Pagination
-          count={Math.ceil(productData.length / itemsPerPage)}
+          count={Math.ceil(currentItems.length / itemsPerPage)}
           page={currentPage}
           color="secondary"
-
         />
       </Container>
 
-      <Popup message={message} setShowPopup={setShowPopup} showPopup={showPopup} />
+      <Popup
+        message={message}
+        setShowPopup={setShowPopup}
+        showPopup={showPopup}
+      />
     </>
-  )
+  );
 };
 
 export default Products;

@@ -26,7 +26,7 @@ const App = () => {
   useEffect(() =>
      {
 
-
+      dispatch(getProducts())
     dispatch(isTokenValid());
   }, [dispatch]); 
 

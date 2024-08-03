@@ -10,11 +10,16 @@ import ShippingPage from '../components/ShippingPage';
 import PaymentForm from '../components/PaymentForm';
 import OrderSummary from '../components/OrderSummary';
 
-const steps = ['Review your order', 'Payment details',];
+const steps = ['Shipping Address','Review your order', 'Payment details']; //Add shipping Address
 
 const CheckoutSteps = () => {
 
     const [activeStep, setActiveStep] = React.useState(0);
+
+    React.useEffect(() => {
+      console.log(activeStep);
+    }, [activeStep])
+    
 
     const handleNext = () => {
         setActiveStep(activeStep + 1);
@@ -38,14 +43,15 @@ const CheckoutSteps = () => {
                             </Step>
                         ))}
                     </Stepper>
+                    {/* Change || to && */}
                         <React.Fragment>
-                            {activeStep === 0 ||
+                            {activeStep === 0 &&
                                 <ShippingPage handleNext={handleNext} />
                             }
-                            {activeStep === 1 ||
+                            {activeStep === 1 &&
                                 <OrderSummary handleNext={handleNext} handleBack={handleBack} />
                             }
-                            {activeStep === 2 ||
+                            {activeStep === 2 &&
                                 <PaymentForm handleBack={handleBack} />
                             }
                         </React.Fragment>

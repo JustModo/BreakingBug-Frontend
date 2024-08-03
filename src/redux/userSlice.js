@@ -170,8 +170,9 @@ const userSlice = createSlice({
         },
 
         isTokenValid: (state) => {
-            const decodedToken = jwtDecode(state.currentToken);
-            if (state.currentToken) {              state.isLoggedIn = true;
+            if (state.currentToken) {              
+                const decodedToken = jwtDecode(state.currentToken); //Practically useless cuz no validation if expired
+                state.isLoggedIn = true;
             } else {
                 localStorage.removeItem('user');
                 state.currentUser = null;
@@ -311,7 +312,9 @@ export const {
     removeAllFromCart,
     fetchProductDetailsFromCart,
     updateCurrentUser,
-    
+    //Add missing exports
+    getCustomersListFailed,
+    setFilteredProducts
 } = userSlice.actions;
 
 export const userReducer = userSlice.reducer;

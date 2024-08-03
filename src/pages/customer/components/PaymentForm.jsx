@@ -23,7 +23,7 @@ const PaymentForm = ({ handleBack }) => {
         cardName: '',
         cardNumber: '',
         expDate: '',
-
+        cvv:'',
     });
 
     const handleInputChange = (e) => {
@@ -86,7 +86,7 @@ const PaymentForm = ({ handleBack }) => {
         if (status === 'added') {
             navigate('/Aftermath');
         }
-        else if (status !== 'failed') {
+        else if (status === 'failed') { // change from !== to ===
             setMessage("Order Failed")
             setShowPopup(true)
         }
@@ -151,7 +151,7 @@ const PaymentForm = ({ handleBack }) => {
                             fullWidth
                             autoComplete="cc-csc"
                             variant="standard"
-                            value={paymentData}
+                            value={paymentData.cvv}
                             onChange={handleInputChange}
                         />
                     </Grid>

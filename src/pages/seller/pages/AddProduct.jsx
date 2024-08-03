@@ -46,6 +46,7 @@ const AddProduct = () => {
   const submitHandler = (event) => {
     event.preventDefault();
     console.log(fields);
+    dispatch(addStuff("ProductCreate",fields)) //Add dispatch to add Data
   };
 
   useEffect(() => {

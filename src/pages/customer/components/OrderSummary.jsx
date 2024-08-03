@@ -92,8 +92,9 @@ const OrderSummary = ({ handleNext, handleBack }) => {
                         </ListItem>
                         <ListItem sx={{ py: 1, px: 0 }}>
                             <ListItemText primary="Discount" />
-                            <Typography variant="subtitle1" sx={{ color: "green" }}>
-                                ₹{totalamount - totalNewPrice}
+                            {/* Fix totalamount -> totalOGPrice */}
+                            <Typography variant="subtitle1" sx={{ color: "green" }}> 
+                                ₹{totalOGPrice - totalNewPrice}
                             </Typography>
                         </ListItem>
                         <ListItem sx={{ py: 1, px: 0 }}>
@@ -126,7 +127,7 @@ const OrderSummary = ({ handleNext, handleBack }) => {
                 </Button>
                 <Button
                     variant="contained"
-                    onClick={handleBack}
+                    onClick={handleNext} //Change to handleNext
                     sx={{ mt: 3, ml: 1 }}
                 >
                     Next

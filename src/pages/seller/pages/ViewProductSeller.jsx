@@ -19,6 +19,8 @@ const ViewProductSeller = () => {
 
   const [showTab, setShowTab] = useState(false);
 
+  const buttonText = showTab ? 'Cancel' : 'Edit'; //Add missed ButtonText
+
   useEffect(() => {
     dispatch(getProductDetails(productID));
   }, [productID, dispatch]);
@@ -43,7 +45,6 @@ const ViewProductSeller = () => {
   const [dialog, setDialog] = useState("");
   const [showDialog, setShowDialog] = useState(false);
 
-  console.log(price);
 
   useEffect(() => {
     if (productDetails) {
@@ -296,10 +297,10 @@ const ViewProductSeller = () => {
                       <ReviewCard key={index}>
                         <ReviewCardDivision>
                           <Avatar sx={{ width: "60px", height: "60px", marginRight: "1rem", backgroundColor: generateRandomColor(review._id) }}>
-                            {String(reviewreviewername).charAt(0)}
+                            {String(review.reviewername).charAt(0)} {/* Fix property access for review*/}
                           </Avatar>
                           <ReviewDetails>
-                            <Typography variant="h6">{reviewreviewername}</Typography>
+                            <Typography variant="h6">{review.reviewername}</Typography> {/* Fix property access for review*/}
                             <div style={{ display: 'flex', alignItems: 'center', marginBottom: '1rem' }}>
 
                               <Typography variant="body2">

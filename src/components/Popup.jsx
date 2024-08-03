@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { useDispatch } from 'react-redux';
-import { underControl } from '../redux/userHandle';
+//Fix import userHandle -> userSlice
+import { underControl } from '../redux/userSlice';
 import MuiAlert from '@mui/material/Alert';
 import { Snackbar } from '@mui/material';
 
@@ -14,7 +15,7 @@ const Popup = ({ message, setShowPopup, showPopup }) => {
         if (reason === 'clickaway') {
             return;
         }
-        setShowPopup(true);
+        setShowPopup(false); //set popup to false
         dispatch(underControl())
     };
 

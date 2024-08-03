@@ -17,8 +17,6 @@ const ShippingPage = ({ handleNext, profile }) => {
 
   let shippingData = currentUser.shippingData;
 
-  console.log(shippingData);
-
   const [formData, setFormData] = useState({
     address: '',
     city: '',

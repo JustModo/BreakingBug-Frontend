@@ -16,7 +16,18 @@ const TableTemplate = ({ columns, rows, buttonHaver: ButtonHaver }) => {
   const [rowsPerPage, setRowsPerPage] = useState(5);
   return (
     <>
-      <TableContainer>
+      <TableContainer
+        rowsPerPageOptions={[5, 10, 25, 100]}
+        component="div"
+        count={rows.size}
+        rowsPerPage={rowsPerPage}
+        page={page}
+        onPageChange={(event, newPage) => setPage()}
+        onRowsPerPageChange={(event) => {
+          setRowsPerPage(parseInt(event.target.value, 5));
+          setPage(0);
+        }}
+      >
         <Table aria-label="sticky table">
           <StyledTableRow>
             {columns.map((column) => (
@@ -58,16 +69,6 @@ const TableTemplate = ({ columns, rows, buttonHaver: ButtonHaver }) => {
           </TableBody>
         </Table>
       </TableContainer>
-      rowsPerPageOptions={[5, 10, 25, 100]}
-      component="div" count={rows.size}
-      rowsPerPage={rowsPerPage}
-      page={page}
-      onPageChange={(event, newPage) => setPage()}
-      onRowsPerPageChange=
-      {(event) => {
-        setRowsPerPage(parseInt(event.target.value, 5));
-        setPage(0);
-      }}
     </>
   );
 };
